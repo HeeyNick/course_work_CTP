@@ -116,7 +116,7 @@ class PackedVector {
     }
   }
 
-  /* Copy constructor */
+
   PackedVector(const PackedVector& rhs)
       : m_size(rhs.m_size),
         m_capacity(rhs.m_capacity),
@@ -124,7 +124,6 @@ class PackedVector {
     std::memcpy(m_ptr, rhs.m_ptr, used_bytes());
   }
 
-  /* Move constructor */
   PackedVector(PackedVector&& rhs) noexcept
       : m_size(rhs.m_size), m_capacity(rhs.m_capacity), m_ptr(rhs.m_ptr) {
     rhs.m_ptr = nullptr;
@@ -132,7 +131,6 @@ class PackedVector {
     rhs.m_capacity = 0;
   }
 
-  /* Copy assignment */
   PackedVector& operator=(const PackedVector& rhs) {
     using std::swap;
 
@@ -144,7 +142,6 @@ class PackedVector {
     return *this;
   }
 
-  /* Move assignment */
   PackedVector& operator=(PackedVector&& rhs) noexcept {
     m_ptr = rhs.m_ptr;
 
@@ -157,12 +154,8 @@ class PackedVector {
     return *this;
   }
 
-  /* Destructor */
   ~PackedVector() { erase(); }
 
-  /** Element access **/
-
-  /* returns the value stored by index 'ind' */
   T at(std::size_t ind) const {
     if (ind >= size()) {
       throw std::out_of_range("Index out of range");
@@ -180,19 +173,14 @@ class PackedVector {
     return ret;
   }
 
-  /* returns the value stored by index 'ind' */
   T operator[](std::size_t ind) const { return at(ind); }
 
-  /* returns the first element (index = 0) */
   T front() const { return at(0); }
 
-  /* returns the  last element (index = size - 1) */
   T back() const { return at(m_size - 1); }
 
-  /* returns raw data pointer */
   const std::uint8_t* data() const { return m_ptr; }
 
-  /* set element's value with index 'ind' to the 'value' */
   void assign(std::size_t ind, T value) {
     if (ind >= size()) {
       throw std::out_of_range("Index out of range");
@@ -210,28 +198,18 @@ class PackedVector {
     }
   }
 
-  /** Capacity **/
-
-  /* returns 'true' if no used elements */
   bool empty() const { return m_size == 0; }
 
-  /* returns the number of used elements */
   std::size_t size() const { return m_size; }
 
-  /* returns maximum number of elements that vector can store without
-   * reallocation */
   std::size_t capacity() const { return m_capacity; }
 
-  /* returns the number of bits needed to store 1 element */
   std::size_t bits() const { return BITS; }
 
-  /* returns the number of bytes needed to store 'Size' elements */
   std::size_t used_bytes() const { return 1 + m_size * BITS / 8U; }
 
-  /* returns the number of bytes needed to store 'Capacity' elements */
   std::size_t reserved_bytes() const { return 1 + m_capacity * BITS / 8U; }
 
-  /* reduces the capacity to the size */
   void shrink_to_fit() {
     std::size_t used_bytes = m_size * bits() / 8U + 1;
 
@@ -245,23 +223,18 @@ class PackedVector {
     m_capacity = m_size;
   }
 
-  /** Modifiers **/
-
-  /* set all bits of data to 0 */
   void clear() {
     for (std::size_t i = 0; i < used_bytes(); i++) {
       assign(i) = 0;
     }
   }
 
-  /* free allocated memory */
   void erase() {
     delete[] m_ptr;
     m_ptr = nullptr;
     m_size = m_capacity = 0;
   }
 
-  /* inserts element after element stored by index 'ind' */
   void insert(std::size_t ind, T value) {
     m_size++;
 
@@ -272,7 +245,6 @@ class PackedVector {
     assign(ind + 1, value);
   }
 
-  /* changes size, reallocates if needed */
   void resize(std::size_t new_size) {
     if (new_size < m_capacity) {
       m_size = new_size;
@@ -301,7 +273,6 @@ class PackedVector {
     }
   }
 
-  /* changes capacity, reallocation is needed */
   void reserve(std::size_t new_cap) {
     if (new_cap == 0) {
       erase();
@@ -324,22 +295,18 @@ class PackedVector {
     m_ptr = new_ptr;
   }
 
-  /* adds element after the last one */
   void push_back(T value) {
     m_size++;
 
-    /* without reallocation */
     if (m_size < m_capacity) {
       assign(m_size - 1, value);
       return;
     }
 
-    /* with reallocation */
     reserve(m_capacity + 2);
     assign(m_size - 1, value);
   }
 
-  /* removes and returns the last element */
   T pop_back() {
     T ret = at(m_size - 1);
 
@@ -348,7 +315,6 @@ class PackedVector {
     return ret;
   }
 
-  /* returns the common array of type T */
   T* unpack() const {
     T* array = new T[size()];
 
@@ -359,16 +325,10 @@ class PackedVector {
     return array;
   }
 
-  /** Iterator **/
-
-  /* returns the iterator that points to the first element of the vector */
   PackedIterator begin() { return PackedIterator(this, 0); }
 
-  /* return the iterator that points to the element going ahead of the last
-   * element */
   PackedIterator end() { return PackedIterator(this, size()); }
 
-  /* swap memory of two vectors */
   friend void swap(PackedVector& lhs, PackedVector& rhs) noexcept {
     using std::swap;
 
