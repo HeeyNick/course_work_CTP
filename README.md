@@ -65,4 +65,43 @@ ___
     
   vec.erase()  
   Очитска всей памяти вектора // free all vector's memory
+  
+## Tests
+```
+[==========] Running 12 tests from 2 test suites. 
+[----------] Global test environment set-up. 
+[----------] 7 tests from PackedVectorTest 
+[ RUN      ] PackedVectorTest.Constructor 
+[       OK ] PackedVectorTest.Constructor (0 ms) 
+[ RUN      ] PackedVectorTest.DefaultConstructor 
+[       OK ] PackedVectorTest.DefaultConstructor (0 ms) 
+[ RUN      ] PackedVectorTest.CopyConstructor 
+[       OK ] PackedVectorTest.CopyConstructor (0 ms) 
+[ RUN      ] PackedVectorTest.CopyAssignment 
+[       OK ] PackedVectorTest.CopyAssignment (0 ms) 
+[ RUN      ] PackedVectorTest.MoveConstructor 
+[       OK ] PackedVectorTest.MoveConstructor (0 ms) 
+[ RUN      ] PackedVectorTest.MoveAssignment 
+[       OK ] PackedVectorTest.MoveAssignment (0 ms) 
+[ RUN      ] PackedVectorTest.ModifiersTest1 
+[       OK ] PackedVectorTest.ModifiersTest1 (0 ms) 
+[----------] 7 tests from PackedVectorTest (0 ms total) 
 
+[----------] 5 tests from PackedIteratorTest 
+[ RUN      ] PackedIteratorTest.FindTest 
+[       OK ] PackedIteratorTest.FindTest (0 ms) 
+[ RUN      ] PackedIteratorTest.IncludesTest 
+[       OK ] PackedIteratorTest.IncludesTest (0 ms) 
+[ RUN      ] PackedIteratorTest.EqualTest 
+[       OK ] PackedIteratorTest.EqualTest (0 ms) 
+[ RUN      ] PackedIteratorTest.AllAnyNoneOfTest 
+[       OK ] PackedIteratorTest.AllAnyNoneOfTest (0 ms) 
+[ RUN      ] PackedIteratorTest.CountTest 
+[       OK ] PackedIteratorTest.CountTest (0 ms) 
+[----------] 5 tests from PackedIteratorTest (0 ms total) 
+
+[----------] Global test environment tear-down 
+[==========] 12 tests from 2 test suites ran. (0 ms total) 
+[  PASSED  ] 12 tests.
+
+```
