@@ -65,6 +65,8 @@ ___
     
   vec.erase()  
   Очитска всей памяти вектора // free all vector's memory
+
+___
   
 ## Tests
 ```
